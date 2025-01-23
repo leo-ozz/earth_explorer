@@ -16,9 +16,9 @@ export function getCountryByClick(event, window, camera, scene) {
     }
   });
 
-  if (typeof objectsWithName[0] !== "undefined") {
-    return objectsWithName[0];
+  if (typeof objectsWithName[0] == "undefined") {
+    return null;
   }
 
-  return null;
+  return objectsWithName[0];
 }

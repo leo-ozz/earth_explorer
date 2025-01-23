@@ -3,11 +3,9 @@ import StartScene from "./StartScene/startScene";
 import ExploreScene from "./ExploreScene/exploreScene";
 import { getCountryByClick } from "./ExploreScene/getCountryByClick";
 
-let currentScene;
-let currentCamera;
+let currentScene, currentCamera;
 let score = 0;
 
-//scene renderer
 const canvas = document.querySelector("canvas.threejs");
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -15,10 +13,33 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-//html renderer
+//init scene
 const startScene = new StartScene(renderer.domElement);
 const exploreScene = new ExploreScene(renderer.domElement);
 updateCurrentScene(startScene);
+
+//add audio to current camera
+const listener = new THREE.AudioListener();
+currentCamera.add(listener);
+
+const audioLoader = new THREE.AudioLoader();
+const backgroundTrack = new THREE.Audio(listener);
+audioLoader.load("src/assets/sounds/search_the_world.mp3", (buffer) => {
+  backgroundTrack.setBuffer(buffer);
+  backgroundTrack.setLoop(true);
+  backgroundTrack.setVolume(0.1);
+  //backgroundTrack.play();
+});
+
+const planeSound = new THREE.PositionalAudio(listener);
+audioLoader.load("src/assets/sounds/plane_sound.mp3", (buffer) => {
+  planeSound.setBuffer(buffer);
+  planeSound.setLoop(true);
+  planeSound.setVolume(0.015);
+  planeSound.setDistanceModel("exponential");
+  planeSound.setRolloffFactor(100.0);
+  //planeSound.play();
+});
 
 function updateCurrentScene(scene) {
   currentScene = scene;
@@ -33,6 +54,9 @@ function handleResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+function setVolume() {}
+
+// ======= EVENT LISTENER =======
 window.addEventListener("resize", handleResize);
 
 //key listener
@@ -92,7 +116,7 @@ document.addEventListener(
   false
 );
 
-//Logic for buttons
+//buttons
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", startExploring);
 
@@ -150,7 +174,8 @@ function toggleDisplay(objArray) {
 const clock = new THREE.Clock();
 function render() {
   let delta = clock.getDelta();
-  currentScene.animate(delta, keysPressed);
+  const distCameraPlane = currentScene.animate(delta, keysPressed);
+  planeSound.setRefDistance(distCameraPlane * 100);
   renderer.render(currentScene, currentCamera);
 
   requestAnimationFrame(render);

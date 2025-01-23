@@ -115,8 +115,11 @@ export default class StartScene extends THREE.Scene {
     ).rotation.y += 0.0005;
 
     aircraftOrbiter.rotation.y -= 0.013;
-    //aircraftOrbiter.rotation.x -= 0.01;
+    //aircraftOrbiter.rotation.x -= 0.01;  NOT WORKING
 
     controls.update();
+
+    const distCameraPlane = aircraft.position.distanceTo(camera.position);
+    return distCameraPlane;
   }
 }

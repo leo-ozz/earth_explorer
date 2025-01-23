@@ -1,8 +1,8 @@
 import * as THREE from "three";
 
-export default function getStarfield({ numStars = 2000 } = {}) {
+export default function getStarfield({ numStars = 2000, minRadius = 25 } = {}) {
   function createRandomStar() {
-    const radius = Math.random() * 25 + 25;
+    const radius = Math.random() * 25 + minRadius;
     const u = Math.random();
     const v = Math.random();
     const theta = 2 * Math.PI * u;

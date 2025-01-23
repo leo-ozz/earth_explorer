@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { drawGeoJSON } from "./drawGeoJSON";
+import getStarfield from "../StartScene/getStarfield";
 
 //controls source: https://github.com/tamani-coding/threejs-character-controls-example/blob/main/src/characterControls.ts
 
@@ -34,8 +35,8 @@ export default class ExploreScene extends THREE.Scene {
     camera.position.set(0, 1, 2);
     this.add(camera);
 
-    const axesHelper = new THREE.AxesHelper(3);
-    this.add(axesHelper);
+    // const axesHelper = new THREE.AxesHelper(3);
+    // this.add(axesHelper);
 
     orbitControls = new OrbitControls(camera, canvas);
     orbitControls.enableDamping = true;
@@ -50,6 +51,9 @@ export default class ExploreScene extends THREE.Scene {
     const dirLight = new THREE.DirectionalLight();
     this.add(dirLight);
 
+    const stars = getStarfield({ numStars: 5000, minRadius: 250 });
+    this.add(stars);
+
     //dummy to showcase quiz functionality
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshStandardMaterial({
@@ -58,10 +62,10 @@ export default class ExploreScene extends THREE.Scene {
     });
     const dummyButton = new THREE.Mesh(geometry, material);
     dummyButton.name = "Germany"; //give name to build URL
-    this.add(dummyButton);
+    //this.add(dummyButton);
 
     this.add(loadMap());
-    //this.add(loadCountryBorders());
+    //this.add(loadCountryBorders()); //NOT WORKING YET
     loadAirplane();
     this.add(airplane);
   }
@@ -135,6 +139,8 @@ export default class ExploreScene extends THREE.Scene {
       updateCameraTarget(moveX, moveZ);
     }
     orbitControls.update();
+    const distCameraPlane = airplane.position.distanceTo(camera.position);
+    return distCameraPlane;
   }
 }
 
@@ -194,7 +200,6 @@ function loadCountryBorders() {
   let material = new THREE.MeshBasicMaterial({
     color: 0x111111,
     wireframe: false,
-    transparent: true,
     side: THREE.DoubleSide,
   });
   let borderMap = new THREE.Mesh(geometry, material);

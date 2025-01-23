@@ -1,8 +1,6 @@
 import * as THREE from "three";
 
 export function drawGeoJSON(json, materialOptions, plane) {
-  //   const x_values = [];
-  //   const y_values = [];
   let { x_max, y_max } = getPlaneSize(plane);
 
   const countries = getData(json);
@@ -10,15 +8,23 @@ export function drawGeoJSON(json, materialOptions, plane) {
   let counter = 1;
   const max = 2;
   countries.forEach((country) => {
-    // if (counter > max) {
-    //   return;
-    // }
-    // counter += 1;
+    if (counter >= max) {
+      return;
+    }
+    counter += 1;
     if (country.geo.type == "MultiPolygon") {
       country.geo.coordinates.forEach((entry) => {
         addPolygon(country.name, entry[0]);
       });
     } else {
+      //console.log(country.geo.coordinates[0]);
+      // const temp_coords = [
+      //   [80, 80],
+      //   [80, 40],
+      //   [40, 40],
+      //   [40, 80],
+      // ];
+      // addPolygon(country.name, temp_coords);
       addPolygon(country.name, country.geo.coordinates[0]);
     }
   });
@@ -26,6 +32,7 @@ export function drawGeoJSON(json, materialOptions, plane) {
   //create mesh from polygon for each country
   function addPolygon(name, geoCoords) {
     const coords = convertCoordinates(geoCoords);
+    console.log(coords);
     const polyShape = new THREE.Shape(
       coords.forEach((coord) => {
         new THREE.Vector2(coord.x, coord.y);
