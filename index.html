@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/style.css">
+  <title>Earth Explorer</title>
+</head>
+
+<body>
+  <canvas class="threejs"></canvas>
+  <div id="header">
+    <button id="settingsButton"> Settings </button>
+    <div id="data" style="display: none">
+     <p id="clickMode"> Click mode: off</p>
+     <p id="score"> Points: 0</p>
+    </div>
+  </div>
+  <div id="footer">
+    <button id="start" style="display: block"> Start </button>
+    <button id="exit" style="display: none"> Exit</button>
+  </div>
+  <div id="confirmation" class="popup" style="display: none">
+      <h3>Are you ready to explore?</h3>
+      <button class="Cancel"> Cancel </button>
+      <button id="confirmationStart"> Start</button>
+    </div>
+    <div id="content" style="display: none">
+      <div id="info" class="popup" style="display: none"> 
+        <iframe
+          src=""
+          id="infoIFrame"
+          allowTransparency="true"
+          scrolling="yes"
+          frameborder="0">
+        </iframe>
+        <button id="infoStart"> Start quiz </button>
+      </div>
+      <div id="quiz" class="popup" style="display: none">
+        <button id="quizBack"> Go back </button>
+        <button id="quizSubmit"> Submit </button>
+      </div>
+    </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
