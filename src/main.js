@@ -6,6 +6,18 @@ import { getCountryByClick } from "./ExploreScene/getCountryByClick";
 let currentScene, currentCamera;
 let score = 0;
 
+//html elements
+const contentDiv = document.getElementById("content");
+const settingsDiv = document.getElementById("settings");
+const soundToggle = document.getElementById("soundToggle");
+const musicToggle = document.getElementById("musicToggle");
+const soundVolume = document.getElementById("soundSlider");
+const musicVolume = document.getElementById("musicSlider");
+const confirmationDiv = document.getElementById("confirmation");
+const infoDiv = document.getElementById("info");
+const quizDiv = document.getElementById("quiz");
+const dataDiv = document.getElementById("data");
+
 const canvas = document.querySelector("canvas.threejs");
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -27,15 +39,15 @@ const backgroundTrack = new THREE.Audio(listener);
 audioLoader.load("src/assets/sounds/search_the_world.mp3", (buffer) => {
   backgroundTrack.setBuffer(buffer);
   backgroundTrack.setLoop(true);
-  backgroundTrack.setVolume(0.1);
-  //backgroundTrack.play();
+  backgroundTrack.setVolume(0.2);
+  backgroundTrack.play();
 });
 
 const planeSound = new THREE.PositionalAudio(listener);
 audioLoader.load("src/assets/sounds/plane_sound.mp3", (buffer) => {
   planeSound.setBuffer(buffer);
   planeSound.setLoop(true);
-  planeSound.setVolume(0.015);
+  planeSound.setVolume(0.05);
   planeSound.setDistanceModel("exponential");
   planeSound.setRolloffFactor(100.0);
   //planeSound.play();
@@ -54,7 +66,21 @@ function handleResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function setVolume() {}
+function setVolume() {
+  const sound = soundVolume.value * 0.1;
+  const music = musicVolume.value * planeSound.setVolume(sound);
+  if (soundToggle.value == true) {
+    console.log("here");
+    planeSound.setVolume(0);
+  } else {
+    planeSound.setVolume(sound);
+  }
+  if (musicToggle.value == true) {
+    backgroundTrack.setVolume(0);
+  } else {
+    backgroundTrack.setVolume(music);
+  }
+}
 
 // ======= EVENT LISTENER =======
 window.addEventListener("resize", handleResize);
@@ -78,12 +104,6 @@ document.addEventListener(
 );
 
 //Begin quiz logic
-const contentDiv = document.getElementById("content");
-const confirmationDiv = document.getElementById("confirmation");
-const infoDiv = document.getElementById("info");
-const quizDiv = document.getElementById("quiz");
-const dataDiv = document.getElementById("data");
-
 document.addEventListener(
   "click",
   (event) => {
@@ -123,6 +143,14 @@ startButton.addEventListener("click", startExploring);
 const exitButton = document.getElementById("exit");
 exitButton.addEventListener("click", stopExploring);
 
+const settingsButton = document.getElementById("settingsButton");
+settingsButton.addEventListener("click", () => {
+  toggleDisplay([contentDiv, settingsDiv]);
+});
+
+const settingsApply = document.getElementById("apply");
+settingsApply.addEventListener("click", setVolume);
+
 const confirmationStart = document.getElementById("confirmationStart");
 confirmationStart.addEventListener("click", () => {
   toggleDisplay([confirmationDiv, contentDiv, infoDiv]);
@@ -149,12 +177,16 @@ quizBack.addEventListener("click", () => {
 
 function startExploring() {
   updateCurrentScene(exploreScene);
-  toggleDisplay([startButton, exitButton, dataDiv]);
+  toggleDisplay([startButton, exitButton]);
+  dataDiv.style.display = "flex";
+  contentDiv.style.display = "none";
+  settingsDiv.style.display = "none";
 }
 function stopExploring() {
   updateCurrentScene(startScene);
   toggleDisplay([startButton, exitButton, dataDiv]);
   contentDiv.style.display = "none";
+  settingsDiv.style.display = "none";
   confirmationDiv.style.display = "none";
   infoDiv.style.display = "none";
   quizDiv.style.display = "none";

@@ -104,8 +104,16 @@ export default class StartScene extends THREE.Scene {
     this._camera = camera;
   }
 
-  get controls() {
-    return controls;
+  set controls(controls) {
+    this._controls = controls;
+  }
+
+  toggleControls() {
+    if (controls.enabled == true) {
+      controls.enabled = false;
+    } else {
+      controls.enabled = true;
+    }
   }
 
   animate() {

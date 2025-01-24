@@ -13,13 +13,18 @@
   <div id="header">
     <button id="settingsButton"> Settings </button>
     <div id="data" style="display: none">
-     <p id="clickMode"> Click mode: off</p>
-     <p id="score"> Points: 0</p>
+      <div class="subData">
+        <div><p class="toggle" id="clickMode"> Click mode: off</p></div>
+        <div> <p class="toggle" id="boost"> Boost: off</p></div>
+      </div>
+      <div id="scoreDiv" class="subData">
+        <p id="score"> Points: 0</p>
+      </div>
     </div>
   </div>
   <div id="footer">
-    <button id="start" style="display: block"> Start </button>
-    <button id="exit" style="display: none"> Exit</button>
+    <button id="start" class="sceneButton" style="display: block"> Start </button>
+    <button id="exit" class="sceneButton" style="display: none"> Exit</button>
   </div>
   <div id="confirmation" class="popup" style="display: none">
       <h3>Are you ready to explore?</h3>
@@ -27,6 +32,30 @@
       <button id="confirmationStart"> Start</button>
     </div>
     <div id="content" style="display: none">
+      <div id="settings" style="display: none">
+        <div id="options">
+          <h2>Options</h2>
+          <div class="slidecontainer">
+            <p>Music: </p>
+            <input id="musicSlider" type="range" min="1" max="100" value="50" class="slider">
+            <input type="checkbox" id="musicToggle">
+          </div>
+          <div class="slidecontainer">
+            <p>Sound: </p>
+            <input id="soundSlider" type="range" min="1" max="100" value="50" class="slider">
+            <input type="checkbox" id="soundToggle">
+          </div>
+          <button id="apply"> Apply </button>
+        </div>
+        <div id="controls">
+          <h2>Controls</h2>
+          <p>Standard WASD-movement.</p>
+          <p>SPACE for up and CAPS for down.</p>
+          <p>Toggle boost with SHIFT.</p>
+          <p>Toggle click mode with E.</p>
+        </div>
+        <br style="clear:both;"/>
+      </div>
       <div id="info" class="popup" style="display: none"> 
         <iframe
           src=""

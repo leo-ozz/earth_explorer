@@ -11,32 +11,80 @@ button {
 	background: #fff;
 	border: 0;
 	outline: none;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 400;
 	border-radius: 30px;
 }
 
 p {
 	padding: 10px 20px;
-	background: #fff;
 	border: 0;
 	outline: none;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 400;
-	border-radius: 30px;
+	border-radius: 10px;
+}
+
+.toggle {
+	background: #fa9d96;
+}
+
+#score{
+	background: #ffffff;
+	padding: 10px 20px;
+	border: 0;
+	outline: none;
+	font-size: 16px;
+	font-weight: 400;
+	border-radius: 10px;
 }
 
 #header {
 	position: absolute;
-	top: 20px;
+	top: 1px;
+	z-index: 999;
+	width: 100%;
+}
+
+#settingsButton {
+	float: right;
+	margin: 20px;
+	text-align: center;
+}
+
+#apply {
+	text-align: center;
+	background: #aaaaaa;
+	margin: 20px;
+}
+
+#scoreDiv {
+	margin-left: auto;
+   margin-right: auto;
+   width: 110px;
+}
+
+#subData {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+#boost {
+	width: 70px;
 }
 
 #footer {
 	position: absolute;
 	bottom: 20px;
-
-	text-align: center;
 	z-index: 999;
+	width: 100%;
+}
+
+.sceneButton {
+	margin-left: auto;
+   margin-right: auto;
 }
 
 #content{
@@ -48,9 +96,22 @@ p {
 	align-items: center;
 }
 
-#info {
-	width: 80%;
-	height: 100%
+#setting {
+	padding-top: 20px;
+}
+
+#options {
+	background: #fff;
+	border-radius: 10px;
+	width: 50%;
+	float: left;
+}
+
+#controls {
+	background: #fff;
+	border-radius: 10px;
+	width: 50%;
+	float: right;
 }
 
 .popup {
@@ -72,6 +133,12 @@ p {
 	top: 100px;
 	width: 300px;
 	text-align: center;
+}
+
+
+#info {
+	width: 80%;
+	height: 100%
 }
 
 #infoIFrame {

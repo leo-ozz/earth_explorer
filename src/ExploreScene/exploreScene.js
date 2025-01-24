@@ -78,12 +78,16 @@ export default class ExploreScene extends THREE.Scene {
     this._camera = camera;
   }
 
-  get controls() {
-    return controls;
-  }
-
   get clickMode() {
     return clickMode;
+  }
+
+  toggleControls() {
+    if (controls.enabled == true) {
+      controls.enabled = false;
+    } else {
+      controls.enabled = true;
+    }
   }
 
   animate(delta, keysPressed) {
@@ -148,6 +152,11 @@ function handleToggleInputs(keysPressed) {
   //boost toggle
   if (keysPressed["shift"] && !boost.lastInput) {
     switchToggleState(boost);
+    let mode = boost.state ? "on" : "off";
+    let color = boost.state ? "#84da81" : "#fa9d96";
+    const boostDiv = document.getElementById("boost");
+    boostDiv.innerText = "Boost: " + mode;
+    boostDiv.style.background = color;
   }
   boost.lastInput = keysPressed["shift"];
 
@@ -155,7 +164,10 @@ function handleToggleInputs(keysPressed) {
   if (keysPressed["e"] && !clickMode.lastInput) {
     switchToggleState(clickMode);
     let mode = clickMode.state ? "on" : "off";
-    document.getElementById("clickMode").innerText = "Click mode: " + mode;
+    let color = clickMode.state ? "#84da81" : "#fa9d96";
+    const clickModeDiv = document.getElementById("clickMode");
+    clickModeDiv.innerText = "Click mode: " + mode;
+    clickModeDiv.style.background = color;
     orbitControls.enabled = false;
   }
   clickMode.lastInput = keysPressed["e"];

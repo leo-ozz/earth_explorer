@@ -1,14 +1,12 @@
 =========== TODOs =================
-
-Muss:
-	- fix camera bug (vertical movement camera snaps)
+muss:
 	- nicer html elements
 
 soll:
 	- after effect for airplane (Boost indicator)
 	- atmosphere / clouds (exploreScene)
-	- sounds (soundtrack + airplane sounds)
 	- collision detection (exploreScene)
+	- FOV effect for boost (to seem more powerful)
 
 Wunsch:
 	- water shader
@@ -27,6 +25,9 @@ Wunsch:
 
 FIXES:
 - orient airplane in the right orbiting direction (start scene)
+- fix camera bug (vertical movement camera snaps)
+- fix camera zoom after scene change
+- fix auto play issue (user gesture required)
 
 
 
