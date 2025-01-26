@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
-export function getCountryByClick(event, window, camera, scene) {
+//raycaster to get name of first intersected object
+export function getObjectName(event, window, camera, scene) {
   let mousePointer = new THREE.Vector2();
   mousePointer.x = (event.clientX / window.innerWidth) * 2 - 1;
   mousePointer.y = -(event.clientY / window.innerHeight) * 2 + 1;

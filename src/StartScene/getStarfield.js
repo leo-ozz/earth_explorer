@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
 export default function getStarfield({ numStars = 2000, minRadius = 25 } = {}) {
+  //create random star position
   function createRandomStar() {
     const radius = Math.random() * 25 + minRadius;
     const u = Math.random();
@@ -20,6 +21,7 @@ export default function getStarfield({ numStars = 2000, minRadius = 25 } = {}) {
   const sat = 0.2; //saturation
   const size = 0.2; //point size
 
+  //create stars
   for (let i = 0; i < numStars; i += 1) {
     const star = createRandomStar();
     const col = new THREE.Color().setHSL(hue, sat, Math.random());

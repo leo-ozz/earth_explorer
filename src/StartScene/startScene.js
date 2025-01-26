@@ -5,14 +5,12 @@ import createText from "./createText";
 import { getFresnelMat } from "./getFresnelMat";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-let camera;
+let camera, controls;
 const cameraOffset = 3;
 const earthGroup = new THREE.Group();
 const aircraftOrbiter = new THREE.Object3D();
 const aircraft = new THREE.Object3D();
 const aircraftOffset = 1.1;
-
-let controls;
 
 export default class StartScene extends THREE.Scene {
   constructor(canvas) {
@@ -123,7 +121,7 @@ export default class StartScene extends THREE.Scene {
     ).rotation.y += 0.0005;
 
     aircraftOrbiter.rotation.y -= 0.013;
-    //aircraftOrbiter.rotation.x -= 0.01;  NOT WORKING
+    //aircraftOrbiter.rotation.x -= 0.01;  //for more interesting flight path (NOT WORKING)
 
     controls.update();
 

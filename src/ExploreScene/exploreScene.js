@@ -14,7 +14,6 @@ const normalVelocity = 4;
 const verticalVelocity = boost.state ? normalVelocity / 4 : boostVelocity / 4;
 const minHeight = 1;
 const maxHeight = 30;
-
 const directions = ["w", "a", "s", "d"];
 
 const airplane = new THREE.Object3D();
@@ -62,10 +61,11 @@ export default class ExploreScene extends THREE.Scene {
     });
     const dummyButton = new THREE.Mesh(geometry, material);
     dummyButton.name = "Germany"; //give name to build URL
-    //this.add(dummyButton);
+    this.add(dummyButton);
 
     this.add(loadMap());
-    //this.add(loadCountryBorders()); //NOT WORKING YET
+    const countryPolygons = loadCountryBorders();
+    //this.add(countryPolygons);   //DRAWING NOT WORKING
     loadAirplane();
     this.add(airplane);
   }
@@ -152,6 +152,8 @@ function handleToggleInputs(keysPressed) {
   //boost toggle
   if (keysPressed["shift"] && !boost.lastInput) {
     switchToggleState(boost);
+
+    //switch button text and color
     let mode = boost.state ? "on" : "off";
     let color = boost.state ? "#84da81" : "#fa9d96";
     const boostDiv = document.getElementById("boost");
@@ -163,12 +165,14 @@ function handleToggleInputs(keysPressed) {
   //clickMode toggle
   if (keysPressed["e"] && !clickMode.lastInput) {
     switchToggleState(clickMode);
+    orbitControls.enabled = false;
+
+    //switch button text and color
     let mode = clickMode.state ? "on" : "off";
     let color = clickMode.state ? "#84da81" : "#fa9d96";
     const clickModeDiv = document.getElementById("clickMode");
     clickModeDiv.innerText = "Click mode: " + mode;
     clickModeDiv.style.background = color;
-    orbitControls.enabled = false;
   }
   clickMode.lastInput = keysPressed["e"];
 }
@@ -177,6 +181,7 @@ function switchToggleState(toggle) {
   toggle.state = !toggle.state;
 }
 
+//load model
 function loadAirplane() {
   const gltfLoader = new GLTFLoader();
   gltfLoader.load("src/assets/models/airplane_1.glb", (gltf) => {
@@ -189,6 +194,7 @@ function loadAirplane() {
   });
 }
 
+//earth map with height map as displacement map
 function loadMap() {
   const loader = new THREE.TextureLoader();
   const mapGeo = new THREE.PlaneGeometry(400, 400, 1440, 720);
@@ -207,6 +213,7 @@ function loadMap() {
   return map;
 }
 
+//load polygons of country border to a plane
 function loadCountryBorders() {
   let geometry = new THREE.PlaneGeometry(20, 20, 360, 360);
   let material = new THREE.MeshBasicMaterial({

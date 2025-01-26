@@ -1,18 +1,18 @@
 import * as THREE from "three";
 import StartScene from "./StartScene/startScene";
 import ExploreScene from "./ExploreScene/exploreScene";
-import { getCountryByClick } from "./ExploreScene/getCountryByClick";
+import { getObjectName } from "./ExploreScene/getCountryByClick";
 
 let currentScene, currentCamera;
 let score = 0;
 
-//html elements
+//html elements for eventlisteners
 const contentDiv = document.getElementById("content");
 const settingsDiv = document.getElementById("settings");
 const soundToggle = document.getElementById("soundToggle");
 const musicToggle = document.getElementById("musicToggle");
-const soundVolume = document.getElementById("soundSlider");
-const musicVolume = document.getElementById("musicSlider");
+const soundSlider = document.getElementById("soundSlider");
+const musicSlider = document.getElementById("musicSlider");
 const confirmationDiv = document.getElementById("confirmation");
 const infoDiv = document.getElementById("info");
 const quizDiv = document.getElementById("quiz");
@@ -25,7 +25,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-//init scene
+//init scenes
 const startScene = new StartScene(renderer.domElement);
 const exploreScene = new ExploreScene(renderer.domElement);
 updateCurrentScene(startScene);
@@ -48,10 +48,28 @@ audioLoader.load("src/assets/sounds/plane_sound.mp3", (buffer) => {
   planeSound.setBuffer(buffer);
   planeSound.setLoop(true);
   planeSound.setVolume(0.05);
-  planeSound.setDistanceModel("exponential");
+  planeSound.setDistanceModel("exponential"); //for positional sound drop off
   planeSound.setRolloffFactor(100.0);
   //planeSound.play();
 });
+
+//to be called by settings apply button
+function setVolume() {
+  const soundVolume = soundSlider.value * 0.1;
+  const musicVolume = musicSlider.value * 0.4;
+
+  if (soundToggle.value == true) {
+    console.log("here");
+    planeSound.setVolume(0);
+  } else {
+    planeSound.setVolume(soundVolume);
+  }
+  if (musicToggle.value == true) {
+    backgroundTrack.setVolume(0);
+  } else {
+    backgroundTrack.setVolume(musicVolume);
+  }
+}
 
 function updateCurrentScene(scene) {
   currentScene = scene;
@@ -64,22 +82,6 @@ function handleResize() {
   currentScene.camera = currentCamera;
   currentCamera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function setVolume() {
-  const sound = soundVolume.value * 0.1;
-  const music = musicVolume.value * planeSound.setVolume(sound);
-  if (soundToggle.value == true) {
-    console.log("here");
-    planeSound.setVolume(0);
-  } else {
-    planeSound.setVolume(sound);
-  }
-  if (musicToggle.value == true) {
-    backgroundTrack.setVolume(0);
-  } else {
-    backgroundTrack.setVolume(music);
-  }
 }
 
 // ======= EVENT LISTENER =======
@@ -117,12 +119,7 @@ document.addEventListener(
       contentDiv.style.display == "none" &&
       confirmationDiv.style.display == "none"
     ) {
-      const country = getCountryByClick(
-        event,
-        window,
-        currentCamera,
-        currentScene
-      );
+      const country = getObjectName(event, window, currentCamera, currentScene);
       if (country != null) {
         const url = "https://en.wikipedia.org/wiki/" + country.name;
         console.log("opening page with url: " + url);
@@ -148,33 +145,36 @@ settingsButton.addEventListener("click", () => {
   toggleDisplay([contentDiv, settingsDiv]);
 });
 
-const settingsApply = document.getElementById("apply");
-settingsApply.addEventListener("click", setVolume);
+// needs FIX
+// const settingsApply = document.getElementById("apply");
+// settingsApply.addEventListener("click", setVolume);
 
 const confirmationStart = document.getElementById("confirmationStart");
 confirmationStart.addEventListener("click", () => {
   toggleDisplay([confirmationDiv, contentDiv, infoDiv]);
 });
-
 const infoStart = document.getElementById("infoStart");
 infoStart.addEventListener("click", () => {
-  toggleDisplay([infoDiv, quiz]);
+  toggleDisplay([infoDiv, quizDiv]);
 });
 
 const quizSubmit = document.getElementById("quizSubmit");
 quizSubmit.addEventListener("click", () => {
+  console.log("clicked");
+  console.log(quizDiv.style.display, contentDiv.style.display);
   toggleDisplay([quizDiv, contentDiv]);
   score += 5;
   document.getElementById("score").innerText = "Points: " + score;
   alert("You won 5 points!");
 });
 
-const quizBack = document.getElementById("quizBack");
-quizBack.addEventListener("click", () => {
-  quizDiv.setAttribute("hidden", "hidden");
-  infoDiv.removeAttribute("hidden");
-});
+// const quizBack = document.getElementById("quizBack");
+// quizBack.addEventListener("click", () => {
+//   quizDiv.setAttribute("hidden", "hidden");
+//   infoDiv.removeAttribute("hidden");
+// });
 
+//swap to explore scene
 function startExploring() {
   updateCurrentScene(exploreScene);
   toggleDisplay([startButton, exitButton]);
@@ -182,6 +182,8 @@ function startExploring() {
   contentDiv.style.display = "none";
   settingsDiv.style.display = "none";
 }
+
+//swap to start scene
 function stopExploring() {
   updateCurrentScene(startScene);
   toggleDisplay([startButton, exitButton, dataDiv]);

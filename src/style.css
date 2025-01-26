@@ -89,9 +89,9 @@ p {
 
 #content{
 	position: absolute;
-	top: 100px;
+	top: 120px;
 	width: 100%;
-	height: 700px;
+	height: 500px;
 	text-align: center;
 	align-items: center;
 }
