@@ -1,53 +1,47 @@
 # earth_explorer
 
-## Konzept
+An interactive 3D learning game built with three.js.
 
-Das Konzept für das Projekt hat sich im Laufe der Zeit mitentwickelt. Das Idee für das Endergebnis ist eine Art Lernspiel, bei der man mit einem Flugobjekt über die Welt fliegt, sich nach belieben ein Land auswählen und dort eine "Exploration" starten kann. Die Exploration ist dann eine Kombination aus Wissensaneignung mit einem darauf folgendem Quiz für welches es dann Punkte gibt. Da die Erstellen des Quizes nicht im Vordergrund des Projekts stand, ist die Wissenaneignung einfach ein URL-Link auf die Wikipedia-Seite eines Landes.
-Damit Länder ausgewählt werden können, war meine Idee für jedes Land ein klickbares Polygon zu erstellen. Leider habe ich es nicht hinbekommen, die Polygone zu zeichnen, obwohl die Daten (Siehe Konsole) eigentlich Stimmen sollten.
+## About this project
 
-## Hürden
+This project was created as a semester project (*Semesterarbeit*) submitted in lieu of a written exam. That framing explains some of its priorities: the goal was to work hands-on with three.js and 3D rendering concepts within a fixed timeframe, not to ship a finished game. Some features are therefore prototypical or incomplete. They are documented openly below rather than quietly removed.
 
-- der Umgang mit mehr als einer Szene (Controls oder Kamera überlappen leider noch)
-- Zeichnen der Polygone
-- Ausrichten von Model und Kamera bei Bewegung
-- verstellbarer Sound --> und positional Sound für Flugobjekte
+## Concept
 
-## Weitere Ideen
+The concept evolved over the course of the project. The intended end result is a learning game in which you fly an aircraft over the globe, pick any country you like, and start an "exploration" there. An exploration combines a knowledge-acquisition step with a subsequent quiz that awards points. Since building out the quiz was not the focus of the project, the knowledge step is simply a link to the Wikipedia page of the respective country.
 
-- Game Loop
-  Um die "Playability" zu erhöhen, war die Idee einen Shop zu erstellen bei dem die Punkte, nach einem erfolgreichen Quiz, für neue Flugobjekte und After-Effects ausgegeben werden können.
+To make countries selectable, the idea was to create a clickable polygon for each country. Rendering those polygons is the one part I did not get working, even though the underlying data appears to be correct (see console output).
 
-- Atmosphäre, Wolken, randomisierte Vögelschwärme (damit die Exploration Szene nicht so leer wirkt)
+## Known limitations
 
-- Maßnahmen gegen Ladezeiten (Ladesequenz, async loading oder sogar partial loading)
+- Handling more than one scene — controls and camera still overlap
+- Drawing the country polygons
+- Aligning model and camera during movement
+- Adjustable sound volume, and positional sound for the flying objects
 
-## Quellen
+## Possible next steps
 
-Neben der three.js Dokumentation habe ich noch einige anderen Quellen benutzt. Diese werden im Folgenden aufgelistet und sind auch in der jeweiligen Datei nochmal hinterlegt.
-Dabei möchte ich zwischen 3 Typen von Quellen unterscheiden:
+- **Game loop** — to improve playability, the idea was a shop where points earned from completed quizzes could be spent on new flying objects and after-effects.
+- Atmosphere, clouds, and randomised flocks of birds, so the exploration scene feels less empty
+- Measures against loading times (loading sequence, async loading, or even partial loading)
 
-- Typ 1: Inspiration, aber selbst geschrieben
-- Typ 2: Inspiration, umgeschrieben
-- Typ 3: Quelle übernommen
+## Sources
 
-Combination of ThreeJS and HTMl elements (Typ 1):
-https://jsfiddle.net/9tng8dp0/2/
+Besides the three.js documentation, I used a number of other sources. They are listed below and are additionally referenced in the respective source file.
 
-Inspiration für die Start Szene (Typ 2):
-https://www.youtube.com/watch?v=FntV9iEJ0tU (getFresnelMat.js = Typ 3 Quelle)
-https://www.youtube.com/watch?v=JxXqPvZNQP4 (3D Text)
+I distinguish between three types of source:
 
-Model controls für Exploration Szene (Typ 2):
-https://www.youtube.com/watch?v=C3s0UHpwlf8
+- **Type 1** — inspiration only, written by myself
+- **Type 2** — inspiration, rewritten
+- **Type 3** — source adopted as-is
 
-Bild als displacementMap (Typ 2):
-https://sbcode.net/threejs/displacmentmap/
-
-Inspiration für die Länder-Polygon-Idee (Typ 1):
-https://www.youtube.com/watch?v=f4zncVufL_I
-
-Erstellen von 3D Mesh aus 2D Polygon(Typ 3):
-https://stackoverflow.com/questions/74358515/how-to-draw-polygon-in-three-js-using-vertices
-
-Raycaster zum Klicken von Objekten (Typ 2):
-https://www.youtube.com/watch?v=XkZSAkjM4-A
+| Purpose | Source | Type |
+| --- | --- | --- |
+| Combining three.js and HTML elements | https://jsfiddle.net/9tng8dp0/2/ | 1 |
+| Inspiration for the start scene | https://www.youtube.com/watch?v=FntV9iEJ0tU (`getFresnelMat.js` is a Type 3 source) | 2 |
+| 3D text | https://www.youtube.com/watch?v=JxXqPvZNQP4 | 2 |
+| Model controls for the exploration scene | https://www.youtube.com/watch?v=C3s0UHpwlf8 | 2 |
+| Using an image as a displacement map | https://sbcode.net/threejs/displacmentmap/ | 2 |
+| Inspiration for the country-polygon idea | https://www.youtube.com/watch?v=f4zncVufL_I | 1 |
+| Creating a 3D mesh from a 2D polygon | https://stackoverflow.com/questions/74358515/how-to-draw-polygon-in-three-js-using-vertices | 3 |
+| Raycaster for clicking objects | https://www.youtube.com/watch?v=XkZSAkjM4-A | 2 |
